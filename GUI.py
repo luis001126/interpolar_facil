@@ -1,6 +1,6 @@
 import tkinter as ttk
 from tkinter import *
-from tkinter import Menu, IntVar
+from tkinter import Menu, IntVar, PhotoImage
 from tkinter import messagebox as mBox
 from tkinter.ttk import Notebook
 
@@ -20,6 +20,11 @@ def Referencias():
 
 def Funcionamiento():
     mBox.showinfo('Funcionamiento','Aqui se muestra el funcionamiento')
+
+def Acerca():
+    open(file='Ecuacion-I-E.docx',mode='r')
+    return True
+
 
 def GetValorsI():
     x0 = entrada_x1.get()
@@ -41,7 +46,7 @@ def Selection_Radio():
     else:
         entrada_xE4.set('Desabilitado')
         entrada_yE4.set('Desabilitado')
-
+        return True
 
 
 ventana = Tk()
@@ -54,6 +59,8 @@ ventana.config(menu=barra_de_menu)
 
 opc1 = Menu(barra_de_menu, tearoff=0)
 opc1.add_command(label='Fucionamiento', command=Funcionamiento)
+opc1.add_separator()
+opc1.add_command(label='Acerca de:',command=Acerca)
 opc1.add_separator()
 opc1.add_command(label='Referencias', command=Referencias)
 barra_de_menu.add_cascade(label='Ayuda', menu=opc1)
@@ -169,17 +176,24 @@ entrada_yE4_entrar.place(x=150, y=140)
 tabla3 = ttk.Frame(tabla_control, bg='gray')
 tabla_control.add(tabla3, text='Logica')
 
-texto3 = Label(tabla3, text='insertar como funciona')
-texto3.pack()
+texto3 = Label(tabla3, text='Ecuaciones utilizadas')
+texto3.place(x=0,y=0)
+
+imagen1 = PhotoImage(file='interpol_extrapol.png')
+Label(tabla3,image=imagen1,bd=12).place(x=0,y=0)
+
 # --------------------------------------------
-boton_salir = Button(ventana, text='Sair', command=Salir)
+boton_salir = Button(ventana, text='Salir', command=Salir, bg='gray')
 boton_salir.place(x=390, y=360, width=50, height=25)
+boton_salir.config(cursor='heart')
 # --------------------------------------------
 boton_calcularI = Button(tabla1, text='Calcular',command=GetValorsI)
 boton_calcularI.place(x=300, y=200, width=50, height=25)
+boton_calcularI.config(cursor='heart')
 
-boton_calcularI = Button(tabla2, text='Calcular')
-boton_calcularI.place(x=300, y=200, width=50, height=25)
+boton_calcularE = Button(tabla2, text='Calcular')
+boton_calcularE.place(x=300, y=200, width=50, height=25)
+boton_calcularE.config(cursor='heart')
 #---------------------------------------------------
 variable_radiobuton = IntVar()
 botonradial1=Radiobutton(tabla2,text='Deshabilitar',variable=variable_radiobuton,value=1, command=Selection_Radio)
