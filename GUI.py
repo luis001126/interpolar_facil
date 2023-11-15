@@ -33,6 +33,17 @@ def GetValorsI():
     entrada_y2.set(f' {resultado2} ')
 
 
+def Selection_Radio():
+    choice = variable_radiobuton.get()
+    if choice == 1:
+        entrada_xE1.set('Desabilitado')
+        entrada_yE1.set('Desabilitado')
+    else:
+        entrada_xE4.set('Desabilitado')
+        entrada_yE4.set('Desabilitado')
+
+
+
 ventana = Tk()
 ventana.title('Interpolacion y Extrapolacion ')
 ventana.geometry('450x400')
@@ -170,10 +181,11 @@ boton_calcularI.place(x=300, y=200, width=50, height=25)
 boton_calcularI = Button(tabla2, text='Calcular')
 boton_calcularI.place(x=300, y=200, width=50, height=25)
 #---------------------------------------------------
-botonradial1=Radiobutton(tabla2,text='Deshabilitar')
+variable_radiobuton = IntVar()
+botonradial1=Radiobutton(tabla2,text='Deshabilitar',variable=variable_radiobuton,value=1, command=Selection_Radio)
 botonradial1.place(x=300,y=80)
 
-botonradial2=Radiobutton(tabla2,text='Deshabilitar')
+botonradial2=Radiobutton(tabla2,text='Deshabilitar',state='active',variable=variable_radiobuton,value=2,command=Selection_Radio)
 botonradial2.place(x=300,y=140)
 
 ventana.mainloop()
