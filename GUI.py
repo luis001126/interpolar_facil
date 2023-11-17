@@ -19,7 +19,9 @@ def Referencias():
                                  ' o al numero de telefono +53 59484201')
 
 def Funcionamiento():
-    mBox.showinfo('Funcionamiento','Aqui se muestra el funcionamiento')
+    mBox.showinfo('Funcionamiento','Seleccionar entre Widget (Interpolacion y Extrapolacion), llenar los campos como se indica '
+                                   'en la interfaz del programa, llenar los campos vacios y presionar el boton calcular para obtener los '
+                                   'resultados, El boton salir sirve para cerrar la ventana definitivamente')
 
 def Acerca():
     open(file='Ecuacion-I-E.docx',mode='r')
@@ -38,15 +40,18 @@ def GetValorsI():
     entrada_y2.set(f' {resultado2} ')
 
 
-def Selection_Radio():
-    choice = variable_radiobuton.get()
-    if choice == 1:
-        entrada_xE1.set('Desabilitado')
-        entrada_yE1.set('Desabilitado')
-    else:
-        entrada_xE4.set('Desabilitado')
-        entrada_yE4.set('Desabilitado')
-        return True
+def GetValorsE():
+        x1E = entrada_xE1.get()
+        x2E = entrada_xE2.get()
+        y1E = entrada_yE1.get()
+        y2E = entrada_yE2.get()
+        x_seekE = entrada_xE3.get()
+
+        resultado1E: float = ((y2E - y1E) / (x2E - x1E) * (x_seekE - x1E))
+        resultado2E: float = resultado1E + y1E
+        entrada_yE3.set(f' {resultado2E} ')
+
+
 
 
 ventana = Tk()
@@ -59,8 +64,6 @@ ventana.config(menu=barra_de_menu)
 
 opc1 = Menu(barra_de_menu, tearoff=0)
 opc1.add_command(label='Fucionamiento', command=Funcionamiento)
-opc1.add_separator()
-opc1.add_command(label='Acerca de:',command=Acerca)
 opc1.add_separator()
 opc1.add_command(label='Referencias', command=Referencias)
 barra_de_menu.add_cascade(label='Ayuda', menu=opc1)
@@ -141,14 +144,9 @@ entrada_xE2_entrar.place(x=0, y=100)
 
 
 entrada_xE3 = IntVar()
-entrada_xE3.set('')
+entrada_xE3.set('Var_des')
 entrada_xE3_entrar = Entry(tabla2, textvariable=entrada_xE3, justify=CENTER)
-entrada_xE3_entrar.place(x=0, y=120)
-
-entrada_xE4 = IntVar()
-entrada_xE4.set('')
-entrada_xE4_entrar = Entry(tabla2, textvariable=entrada_xE4, justify=CENTER)
-entrada_xE4_entrar.place(x=0, y=140)
+entrada_xE3_entrar.place(x=0, y=200)
 
 entrada_yE1 = IntVar()
 entrada_yE1.set('')
@@ -161,17 +159,13 @@ entrada_yE2.set('')
 entrada_yE2_entrar = Entry(tabla2, textvariable=entrada_yE2, justify=CENTER)
 entrada_yE2_entrar.place(x=150, y=100)
 
-
 entrada_yE3 = IntVar()
-entrada_yE3.set('')
+entrada_yE3.set('Resp')
 entrada_yE3_entrar = Entry(tabla2, textvariable=entrada_yE3, justify=CENTER)
-entrada_yE3_entrar.place(x=150, y=120)
+entrada_yE3_entrar.place(x=150, y=200)
 
-entrada_yE4 = IntVar()
-entrada_yE4.set('')
-entrada_yE4_entrar = Entry(tabla2, textvariable=entrada_yE4, justify=CENTER)
-entrada_yE4_entrar.place(x=150, y=140)
-
+texto3 = Label(tabla2,text= 'Interpolar',justify=CENTER)
+texto3.place(x=0,y=150)
 # --------------------------------------------
 tabla3 = ttk.Frame(tabla_control, bg='gray')
 tabla_control.add(tabla3, text='Logica')
@@ -182,24 +176,18 @@ texto3.place(x=0,y=0)
 imagen1 = PhotoImage(file='interpol_extrapol.png')
 Label(tabla3,image=imagen1,bd=12).place(x=0,y=0)
 
-# --------------------------------------------
+# ------------------------------------------------
 boton_salir = Button(ventana, text='Salir', command=Salir, bg='gray')
 boton_salir.place(x=390, y=360, width=50, height=25)
 boton_salir.config(cursor='heart')
-# --------------------------------------------
+# ------------------------------------------------
 boton_calcularI = Button(tabla1, text='Calcular',command=GetValorsI)
 boton_calcularI.place(x=300, y=200, width=50, height=25)
 boton_calcularI.config(cursor='heart')
 
-boton_calcularE = Button(tabla2, text='Calcular')
+boton_calcularE = Button(tabla2, text='Calcular',command=GetValorsE)
 boton_calcularE.place(x=300, y=200, width=50, height=25)
 boton_calcularE.config(cursor='heart')
 #---------------------------------------------------
-variable_radiobuton = IntVar()
-botonradial1=Radiobutton(tabla2,text='Deshabilitar',variable=variable_radiobuton,value=1, command=Selection_Radio)
-botonradial1.place(x=300,y=80)
-
-botonradial2=Radiobutton(tabla2,text='Deshabilitar',state='active',variable=variable_radiobuton,value=2,command=Selection_Radio)
-botonradial2.place(x=300,y=140)
 
 ventana.mainloop()
